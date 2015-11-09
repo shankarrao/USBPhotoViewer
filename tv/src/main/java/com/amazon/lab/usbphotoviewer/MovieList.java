@@ -9,7 +9,7 @@ import java.util.List;
 
 public final class MovieList {
     public static final String MOVIE_CATEGORY[] = {
-            "Photos",
+            "Videos",
             "Movies",
             "Category Two",
             "Category Three",
@@ -46,15 +46,6 @@ public final class MovieList {
 
         list.add(buildMovieInfo("Videos", title[0],
                 description, "Phone Videos", videoUrl[0], cardImageUrl[0], bgImageUrl[0]));
-        /*list.add(buildMovieInfo("category", title[0],
-                description, "Studio One", videoUrl[0], cardImageUrl[0], bgImageUrl[0]));
-        list.add(buildMovieInfo("category", title[0],
-                description, "Studio Two", videoUrl[0], cardImageUrl[0], bgImageUrl[0]));
-        list.add(buildMovieInfo("category", title[0],
-                description, "Studio Three", videoUrl[0], cardImageUrl[0], bgImageUrl[0]));
-        list.add(buildMovieInfo("category", title[0],
-                description, "Studio Four", videoUrl[0], cardImageUrl[0], bgImageUrl[0]));
-        */
 
         return list;
     }

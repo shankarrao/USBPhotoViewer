@@ -80,20 +80,15 @@ public class CardPresenter extends Presenter {
 
         Log.d(TAG, "onBindViewHolder");
         if (movie.getCardImageUrl() != null) {
-            cardView.setTitleText(movie.getTitle());
-            cardView.setContentText(movie.getStudio());
+            cardView.setTitleText(movie.getVideoUrl());
+            cardView.setContentText(movie.getVideoUrl());
             cardView.setMainImageDimensions(CARD_WIDTH, CARD_HEIGHT);
             try {
                 cardView.setMainImage(getThumbnail(movie.getCardImageUrl()));
 
             } catch (Exception e) {
-
+                e.printStackTrace();
             }
-            /*Glide.with(viewHolder.view.getContext())
-                    .load(movie.getCardImageUrl())
-                    .centerCrop()
-                    .error(mDefaultCardImage)
-                    .into(cardView.getMainImageView());*/
         }
     }
 
@@ -107,7 +102,7 @@ public class CardPresenter extends Presenter {
     }
 
     private Drawable getThumbnail(String url) {
-        Bitmap b = ThumbnailUtils.createVideoThumbnail("/sdcard/Pictures/7.mp4", MediaStore.Video.Thumbnails.MINI_KIND);
+        Bitmap b = ThumbnailUtils.createVideoThumbnail(url, MediaStore.Video.Thumbnails.MINI_KIND);
         Drawable drawable = new BitmapDrawable(b);
         return drawable;
     }
