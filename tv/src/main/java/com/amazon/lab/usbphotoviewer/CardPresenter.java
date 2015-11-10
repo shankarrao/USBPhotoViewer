@@ -84,7 +84,7 @@ public class CardPresenter extends Presenter {
             cardView.setContentText(movie.getVideoUrl());
             cardView.setMainImageDimensions(CARD_WIDTH, CARD_HEIGHT);
             try {
-                cardView.setMainImage(getThumbnail(movie.getCardImageUrl()));
+                cardView.setMainImage(Utils.getThumbnail(movie.getCardImageUrl()));
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -101,10 +101,5 @@ public class CardPresenter extends Presenter {
         cardView.setMainImage(null);
     }
 
-    private Drawable getThumbnail(String url) {
-        Bitmap b = ThumbnailUtils.createVideoThumbnail(url, MediaStore.Video.Thumbnails.MINI_KIND);
-        Drawable drawable = new BitmapDrawable(b);
-        return drawable;
-    }
 
 }

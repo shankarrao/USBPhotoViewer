@@ -1,5 +1,6 @@
 package com.amazon.lab.usbphotoviewer;
 
+import android.graphics.Path;
 import android.os.Environment;
 
 import java.io.File;
@@ -29,23 +30,14 @@ public final class MovieList {
         File[] allMatchingFiles =
         Utils.listFilesAsArray(new File("/storage/emulated/0/Pictures"), filter, -1);
         list = new ArrayList<Movie>();
-        String title[] = new String[10];
-        title[0] = allMatchingFiles[0].getAbsolutePath();
 
+        String title[] = new String[allMatchingFiles.length];
 
-        String description = allMatchingFiles[0].getAbsolutePath();
-
-        String videoUrl[] = new String[10];
-        videoUrl[0] = allMatchingFiles[0].getAbsolutePath();
-
-        String bgImageUrl[] = new String[10];
-
-        String cardImageUrl[] = new String[10];
-        bgImageUrl[0] = allMatchingFiles[0].getAbsolutePath();
-        cardImageUrl[0] = allMatchingFiles[0].getAbsolutePath();
-
-        list.add(buildMovieInfo("Videos", title[0],
-                description, "Phone Videos", videoUrl[0], cardImageUrl[0], bgImageUrl[0]));
+        for (int i = 0; i < allMatchingFiles.length;i++) {
+            title[i] = allMatchingFiles[i].getAbsolutePath();
+            list.add(buildMovieInfo("Videos", allMatchingFiles[i].getAbsolutePath().substring(allMatchingFiles[i].getAbsolutePath().lastIndexOf("/")+1),
+                    allMatchingFiles[i].getName(), "Phone Videos", title[i], title[i], title[i]));
+        }
 
         return list;
     }

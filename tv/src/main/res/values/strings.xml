@@ -21,6 +21,8 @@
     <string name="personal_settings">Personal Settings</string>
     <string name="watch_trailer_1">Watch trailer</string>
     <string name="watch_trailer_2">FREE</string>
+    <string name="watch_movie_1">Watch Video</string>
+    <string name="watch_movie_2">Now</string>
     <string name="rent_1">Rent By Day</string>
     <string name="rent_2">From $1.99</string>
     <string name="buy_1">Buy and Own</string>

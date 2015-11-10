@@ -53,6 +53,7 @@ import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 
+import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -196,7 +197,7 @@ public class PlaybackOverlayFragment extends android.support.v17.leanback.app.Pl
         mRowsAdapter = new ArrayObjectAdapter(ps);
 
         addPlaybackControlsRow();
-        addOtherRows();
+        //addOtherRows();
 
         setAdapter(mRowsAdapter);
     }
@@ -222,7 +223,12 @@ public class PlaybackOverlayFragment extends android.support.v17.leanback.app.Pl
         Movie movie = mItems.get(mCurrentItem);
         MediaMetadataRetriever mmr = new MediaMetadataRetriever();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-            mmr.setDataSource(movie.getVideoUrl(), new HashMap<String, String>());
+            try {
+                //mmr.setDataSource(new FileInputStream(movie.getVideoUrl()).getFD(), new HashMap<String, String>());
+                mmr.setDataSource(new FileInputStream(movie.getVideoUrl()).getFD());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         } else {
             mmr.setDataSource(movie.getVideoUrl());
         }
@@ -303,7 +309,7 @@ public class PlaybackOverlayFragment extends android.support.v17.leanback.app.Pl
             item.setStudio(mItems.get(mCurrentItem).getStudio());
         }
         if (SHOW_IMAGE) {
-            updateVideoImage(mItems.get(mCurrentItem).getCardImageURI().toString());
+            //updateVideoImage(mItems.get(mCurrentItem).getCardImageURI().toString());
         }
         mRowsAdapter.notifyArrayItemRangeChanged(0, 1);
         mPlaybackControlsRow.setTotalTime(getDuration());

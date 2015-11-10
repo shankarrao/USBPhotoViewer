@@ -17,7 +17,12 @@ package com.amazon.lab.usbphotoviewer;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Bitmap;
 import android.graphics.Point;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.media.ThumbnailUtils;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Display;
 import android.view.WindowManager;
@@ -130,5 +135,11 @@ public class Utils {
             }
         }
         return files;
+    }
+
+    public static Drawable getThumbnail(String url) {
+        Bitmap b = ThumbnailUtils.createVideoThumbnail(url, MediaStore.Video.Thumbnails.MINI_KIND);
+        Drawable drawable = new BitmapDrawable(b);
+        return drawable;
     }
 }

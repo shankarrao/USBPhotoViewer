@@ -53,7 +53,7 @@ import java.util.List;
 public class VideoDetailsFragment extends DetailsFragment {
     private static final String TAG = "VideoDetailsFragment";
 
-    private static final int ACTION_WATCH_TRAILER = 1;
+    private static final int ACTION_WATCH_NOW = 1;
     private static final int ACTION_RENT = 2;
     private static final int ACTION_BUY = 3;
 
@@ -84,8 +84,8 @@ public class VideoDetailsFragment extends DetailsFragment {
             setupAdapter();
             setupDetailsOverviewRow();
             setupDetailsOverviewRowPresenter();
-            setupMovieListRow();
-            setupMovieListRowPresenter();
+            //setupMovieListRow();
+            //setupMovieListRowPresenter();
             updateBackground(mSelectedMovie.getBackgroundImageUrl());
             setOnItemViewClickedListener(new ItemViewClickedListener());
         } else {
@@ -135,7 +135,8 @@ public class VideoDetailsFragment extends DetailsFragment {
                 .getApplicationContext(), DETAIL_THUMB_WIDTH);
         int height = Utils.convertDpToPixel(getActivity()
                 .getApplicationContext(), DETAIL_THUMB_HEIGHT);
-        Glide.with(getActivity())
+        row.setImageDrawable(Utils.getThumbnail(mSelectedMovie.getVideoUrl()));
+        /*Glide.with(getActivity())
                 .load(mSelectedMovie.getCardImageUrl())
                 .centerCrop()
                 .error(R.drawable.default_background)
@@ -149,16 +150,12 @@ public class VideoDetailsFragment extends DetailsFragment {
                         mAdapter.notifyArrayItemRangeChanged(0, mAdapter.size());
                     }
                 });
-
-        row.addAction(new Action(ACTION_WATCH_TRAILER, getResources().getString(
-                R.string.watch_trailer_1), getResources().getString(R.string.watch_trailer_2)));
-        row.addAction(new Action(ACTION_RENT, getResources().getString(R.string.rent_1),
-                getResources().getString(R.string.rent_2)));
-        row.addAction(new Action(ACTION_BUY, getResources().getString(R.string.buy_1),
-                getResources().getString(R.string.buy_2)));
-
+        */
+        row.addAction(new Action(ACTION_WATCH_NOW,"Watch Video","Now"));
         mAdapter.add(row);
     }
+
+
 
     private void setupDetailsOverviewRowPresenter() {
         // Set detail background and style.
@@ -174,7 +171,7 @@ public class VideoDetailsFragment extends DetailsFragment {
         detailsPresenter.setOnActionClickedListener(new OnActionClickedListener() {
             @Override
             public void onActionClicked(Action action) {
-                if (action.getId() == ACTION_WATCH_TRAILER) {
+                if (action.getId() == ACTION_WATCH_NOW) {
                     Intent intent = new Intent(getActivity(), PlaybackOverlayActivity.class);
                     intent.putExtra(DetailsActivity.MOVIE, mSelectedMovie);
                     startActivity(intent);
