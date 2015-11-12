@@ -14,13 +14,12 @@
 
 package com.amazon.lab.usbphotoviewer;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.media.MediaMetadataRetriever;
 import android.media.ThumbnailUtils;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -29,6 +28,7 @@ import android.view.WindowManager;
 import android.widget.Toast;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FilenameFilter;
 import java.util.Collection;
 import java.util.Vector;
@@ -115,6 +115,7 @@ public class Utils {
         Vector<File> files = new Vector<File>();
 
         File[] entries = directory.listFiles();
+        String s[] = directory.list();
 
         if (entries != null) {
             for (File entry : entries) {
@@ -141,5 +142,16 @@ public class Utils {
         Bitmap b = ThumbnailUtils.createVideoThumbnail(url, MediaStore.Video.Thumbnails.MINI_KIND);
         Drawable drawable = new BitmapDrawable(b);
         return drawable;
+    }
+
+    public static int getMovieHeight(String url) {
+        MediaMetadataRetriever mmr = new MediaMetadataRetriever();
+        try {
+            mmr.setDataSource(new FileInputStream(url).getFD());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        String height = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_HEIGHT);
+        return Integer.parseInt(height);
     }
 }

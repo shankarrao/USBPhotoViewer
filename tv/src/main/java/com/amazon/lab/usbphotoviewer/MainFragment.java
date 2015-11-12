@@ -57,7 +57,7 @@ public class MainFragment extends BrowseFragment {
     private static final int BACKGROUND_UPDATE_DELAY = 300;
     private static final int GRID_ITEM_WIDTH = 200;
     private static final int GRID_ITEM_HEIGHT = 200;
-    private static final int NUM_ROWS = 1;
+    private static final int NUM_ROWS = 2;
     private static final int NUM_COLS = 15;
 
     private final Handler mHandler = new Handler();
@@ -104,7 +104,8 @@ public class MainFragment extends BrowseFragment {
             }
             ArrayObjectAdapter listRowAdapter = new ArrayObjectAdapter(cardPresenter);
             for (int j = 0; j < list.size(); j++) {
-                listRowAdapter.add(list.get(j));
+                if ((i == 0 && !list.get(j).isUhd()) || (i == 1 && list.get(j).isUhd()))
+                    listRowAdapter.add(list.get(j));
             }
             HeaderItem header = new HeaderItem(i, MovieList.MOVIE_CATEGORY[i]);
             mRowsAdapter.add(new ListRow(header, listRowAdapter));
@@ -167,7 +168,7 @@ public class MainFragment extends BrowseFragment {
 
             if (item instanceof Movie) {
                 Movie movie = (Movie) item;
-                Log.d(TAG, "Item: " + item.toString());
+                //Log.d(TAG, "Item: " + item.toString());
                 Intent intent = new Intent(getActivity(), DetailsActivity.class);
                 intent.putExtra(DetailsActivity.MOVIE, movie);
 

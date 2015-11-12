@@ -11,7 +11,7 @@ import java.util.List;
 public final class MovieList {
     public static final String MOVIE_CATEGORY[] = {
             "Videos",
-            "Movies",
+            "UHD Videos",
             "Category Two",
             "Category Three",
             "Category Four",
@@ -28,7 +28,8 @@ public final class MovieList {
             }
         };
         File[] allMatchingFiles =
-        Utils.listFilesAsArray(new File("/storage/emulated/0/Pictures"), filter, -1);
+        //Utils.listFilesAsArray(new File("/data/mtpfs/Internal storage/Movies"), filter, -1);
+        Utils.listFilesAsArray(new File("/sdcard/Pictures"), filter, -1);
         list = new ArrayList<Movie>();
 
         String title[] = new String[allMatchingFiles.length];
@@ -55,6 +56,7 @@ public final class MovieList {
         movie.setCardImageUrl(cardImageUrl);
         movie.setBackgroundImageUrl(bgImageUrl);
         movie.setVideoUrl(videoUrl);
+        movie.setHeight(Utils.getMovieHeight(videoUrl));
         return movie;
     }
 }

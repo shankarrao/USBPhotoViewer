@@ -80,7 +80,7 @@ public class CardPresenter extends Presenter {
 
         Log.d(TAG, "onBindViewHolder");
         if (movie.getCardImageUrl() != null) {
-            cardView.setTitleText(movie.getVideoUrl());
+            cardView.setTitleText(movie.getTitle());
             cardView.setContentText(movie.getVideoUrl());
             cardView.setMainImageDimensions(CARD_WIDTH, CARD_HEIGHT);
             try {

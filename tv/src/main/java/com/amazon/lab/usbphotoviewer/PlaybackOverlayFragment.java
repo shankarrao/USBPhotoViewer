@@ -95,6 +95,8 @@ public class PlaybackOverlayFragment extends android.support.v17.leanback.app.Pl
     private Handler mHandler;
     private Runnable mRunnable;
     private Movie mSelectedMovie;
+    private static int mVideoWidth;
+    private static int mVideoHeight;
 
     OnPlayPauseClickedListener mCallback;
 
@@ -234,7 +236,19 @@ public class PlaybackOverlayFragment extends android.support.v17.leanback.app.Pl
         }
         String time = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
         long duration = Long.parseLong(time);
+        String height = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_HEIGHT);
+        mVideoHeight = Integer.parseInt(height);
+        String width = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_WIDTH);
+        mVideoWidth = Integer.parseInt(width);
         return (int) duration;
+    }
+
+    public static int getVideoWidth() {
+        return mVideoWidth;
+    }
+
+    public static int getVideoHeight() {
+        return mVideoHeight;
     }
 
     private void addPlaybackControlsRow() {

@@ -16,18 +16,25 @@ package com.amazon.lab.usbphotoviewer;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
+import android.hardware.display.DisplayManager;
 import android.media.MediaMetadata;
 import android.media.MediaPlayer;
 import android.media.session.MediaSession;
 import android.media.session.PlaybackState;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.widget.VideoView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
+
+import com.amazon.lab.usbphotoviewer.uhdHelper.Display;
+import com.amazon.lab.usbphotoviewer.uhdHelper.UhdHelper;
+import com.amazon.lab.usbphotoviewer.uhdHelper.UhdHelperListener;
+
 
 /**
  * PlaybackOverlayActivity for video playback that loads PlaybackOverlayFragment
@@ -39,7 +46,8 @@ public class PlaybackOverlayActivity extends Activity implements
     private VideoView mVideoView;
     private LeanbackPlaybackState mPlaybackState = LeanbackPlaybackState.IDLE;
     private MediaSession mSession;
-
+    private UhdHelper mUhdHelper;
+    private Display.Mode modes[];
 
     /**
      * Called when the activity is first created.
@@ -56,8 +64,59 @@ public class PlaybackOverlayActivity extends Activity implements
                 MediaSession.FLAG_HANDLES_TRANSPORT_CONTROLS);
 
         mSession.setActive(true);
+        mUhdHelper = new UhdHelper(this);
+        Display.Mode  currentMode = mUhdHelper.getMode();
+        if (currentMode != null) {
+            if (PlaybackOverlayFragment.getVideoHeight() > 1080) {
+                Log.i(TAG, "Need mode switch");
+                modes = mUhdHelper.getSupportedModes();
+                String[] modesString =null;
+                if(modes!=null)
+                {
+                    int i = 0;
+                    modesString = new String[modes.length];
+                    for(Display.Mode mode : modes){
+                        modesString[i++] = mode.toString();
+                    }
+                    changeMode(93);
+
+                }
+            } else {
+                Log.i(TAG, "No mode switch required");
+            }
+        }
     }
 
+    private void changeMode(final int modeId){
+        //Register listener first before attempting to change the mode.
+        mUhdHelper.registerModeChangeListener(new UhdHelperListener() {
+            @Override
+            public void onModeChanged(Display.Mode mode) {
+//                Log.i(TAG, "After Mode change " + uhdHelper.getMode().toString());
+                if (mode == null && mUhdHelper.getMode() == null) {
+                    Log.w(TAG, "Mode changed Failure, Internal error occured.");
+//                    return;
+                } else if (mUhdHelper.getMode().getModeId() != modeId) {
+                    //Once onDisplayChangedListener sends proper callback, the above if condition
+                    //need to changed to mode.getModeId() != modeId
+                    Log.w(TAG, "Mode changed Failure, Current mode id is " + mode.getModeId());
+//
+                } else {
+                    Log.i(TAG, "Mode changed Success");
+                    try {
+                    } catch (NullPointerException e) {
+                        //TODO Once  onDisplayChangedListener sends proper callback, the catch should be removed.
+                        mode = mUhdHelper.getMode();
+
+                    }
+
+                }
+
+            }
+        });
+        //Do mode change after registering the listener
+        mUhdHelper.setPreferredDisplayModeId(getWindow(), modeId, true);
+    }
 
     @Override
     public void onDestroy() {

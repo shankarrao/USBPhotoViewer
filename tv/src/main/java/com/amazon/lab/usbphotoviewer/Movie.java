@@ -35,6 +35,8 @@ public class Movie implements Serializable {
     private String videoUrl;
     private String studio;
     private String category;
+    private int height;
+    private int width;
 
     public Movie() {
     }
@@ -127,6 +129,16 @@ public class Movie implements Serializable {
         } catch (URISyntaxException e) {
             return null;
         }
+    }
+
+    public void setWidth(int width) { this.width = width; }
+
+    public void setHeight(int height) { this.height = height; }
+
+    public boolean isUhd() {
+        if (height > 1080) return true;
+        else
+            return false;
     }
 
     @Override
