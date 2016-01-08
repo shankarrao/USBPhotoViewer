@@ -78,7 +78,7 @@ public class PlaybackOverlayActivity extends Activity implements
                     for(Display.Mode mode : modes){
                         modesString[i++] = mode.toString();
                     }
-                    changeMode(93);
+                    changeMode(95);
 
                 }
             } else {

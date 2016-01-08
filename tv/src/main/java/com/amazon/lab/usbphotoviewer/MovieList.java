@@ -28,8 +28,8 @@ public final class MovieList {
             }
         };
         File[] allMatchingFiles =
-        //Utils.listFilesAsArray(new File("/data/mtpfs/Internal storage/Movies"), filter, -1);
-        Utils.listFilesAsArray(new File("/sdcard/Pictures"), filter, -1);
+        Utils.listFilesAsArray(new File("/data/mtpfs/Internal storage/Movies"), filter, -1);
+        //Utils.listFilesAsArray(new File("/sdcard/Pictures"), filter, -1);
         list = new ArrayList<Movie>();
 
         String title[] = new String[allMatchingFiles.length];
